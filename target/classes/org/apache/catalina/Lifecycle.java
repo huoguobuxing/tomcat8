@@ -18,6 +18,18 @@ package org.apache.catalina;
 
 
 /**
+ * 为了提供一致的操作体验，所有tomcat组件都实现该接口。
+ *
+ * tomcat认为所有组件都应该具有以下事件 before_init->after_init->start->before_start->after_start->stop->before_stop->after_stop->before_destroy->after_destroy
+ * 额外的一个特殊的事件：periodic 定期执行
+ *每一个产生事件的方法都有可能失败，所以都有 LifecycleException异常声明
+ *
+ * 每个组件都是有状态的，状态见 LifecycleState，每种状态对应一种事件，便于getStates后，立即触发事件
+ *
+ * tomcat组件包含 LifecycleListener 数组，用来记录观察者，一旦方法被调用，响应的事件将会被出发，监听该组件的类将会被调用。典型的观察着模式
+ */
+
+/**
  * Common interface for component life cycle methods.  Catalina components
  * may implement this interface (as well as the appropriate interface(s) for
  * the functionality they support) in order to provide a consistent mechanism
