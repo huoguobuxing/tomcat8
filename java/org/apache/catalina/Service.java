@@ -20,6 +20,11 @@ import org.apache.catalina.connector.Connector;
 import org.apache.catalina.mapper.Mapper;
 
 /**
+ * 一个Service是由 Connectors（复数）+Container（单数）组成
+ * 多个Connectors可以一个监听80，一个监听443，共享一个Container处理请求
+ * Container是一个大的概念，还是可以进一步拆分的
+ * Service仅有一个实现 StandardService
+ *
  * A <strong>Service</strong> is a group of one or more
  * <strong>Connectors</strong> that share a single <strong>Container</strong>
  * to process their incoming requests.  This arrangement allows, for example,

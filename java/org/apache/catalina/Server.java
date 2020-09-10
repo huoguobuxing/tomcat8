@@ -24,6 +24,14 @@ import org.apache.catalina.deploy.NamingResourcesImpl;
 import org.apache.catalina.startup.Catalina;
 
 /**
+ * Server并非servlet容器，它代表了整个tomcat
+ * 一个Server是由一些其他容器组成的，Server Stop将会递归关掉所有子容器
+ * Server上包含 port 和 shutdown ， 本机执行 telnet ip port , 然后输入 shutdown ，tomcat则会被关闭
+ * 一个Server是由一个或者多个Service组成的，所以有Service的增删改
+ * 一个Server持有一个Catalina的操作类，这个类封装了对Catalina的一些命令行方法
+ *  GlobalNamingContext 不明白什么意思，待确认
+ *  唯一的实现类 StandardServer
+ *
  * A <code>Server</code> element represents the entire Catalina
  * servlet container.  Its attributes represent the characteristics of
  * the servlet container as a whole.  A <code>Server</code> may contain

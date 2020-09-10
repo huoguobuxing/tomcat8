@@ -41,6 +41,9 @@ import org.apache.tomcat.util.res.StringManager;
 
 
 /**
+ *  每个Service是由 Connector[] 以及 Engine组成的，另外包含 Executor[]
+ *  只看到了Executor的增删改，并没有看到应用，待确认
+ *
  * Standard implementation of the <code>Service</code> interface.  The
  * associated Container is generally an instance of Engine, but this is
  * not required.

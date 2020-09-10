@@ -347,11 +347,15 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
         service.setServer(this);
 
         synchronized (servicesLock) {
+            // 线程安全
+            // 没有用ArrayList，而是先new新的，再copy，为什么？待确认
             Service results[] = new Service[services.length + 1];
             System.arraycopy(services, 0, results, 0, services.length);
             results[services.length] = service;
             services = results;
 
+            // 新加入的service，如果可用会立即执行
+            // 可用是指组件状态 为 STARTING_,STARTED,STOPPING_PREP
             if (getState().isAvailable()) {
                 try {
                     service.start();
@@ -360,6 +364,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
                 }
             }
 
+            // 观察者模式，只是listenner集合没有维护在server中，而是在一个工具类中，所有PropertyChangeListener注册在了工具类中
             // Report this property change to interested listeners
             support.firePropertyChange("service", null, service);
         }
